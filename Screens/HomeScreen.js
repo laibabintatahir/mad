@@ -1,7 +1,9 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity, TouchableHighlight } from "react-native";
 
 const HomeScreen = ({ navigation }) => {
+  const [hoveredBox, setHoveredBox] = useState(null);
+
   const handleNavigate = (screen) => {
     navigation.navigate(screen);
   };
@@ -36,21 +38,24 @@ const HomeScreen = ({ navigation }) => {
       description: 'Manage your profile and view order history.',
     },
   ];
-  
 
   const navigateToScreen = (screen) => {
     navigation.navigate(screen);
   };
 
   const renderBox = ({ item }) => (
-    <TouchableOpacity
-      style={styles.box}
+    <TouchableHighlight
+      style={[styles.box, item.id === hoveredBox && styles.hoveredBox]}
       onPress={() => navigateToScreen(item.screen)}
+      onHideUnderlay={() => setHoveredBox(null)}
+      onShowUnderlay={() => setHoveredBox(item.id)}
     >
-      <Image source={item.image} style={styles.boxImage} />
-      <Text style={styles.boxText}>{item.name}</Text>
-      <Text style={styles.Description}>{item.description}</Text>
-    </TouchableOpacity>
+      <>
+        <Image source={item.image} style={styles.boxImage} />
+        <Text style={styles.boxText}>{item.name}</Text>
+        <Text style={styles.Description}>{item.description}</Text>
+      </>
+    </TouchableHighlight>
   );
 
   return (
@@ -85,20 +90,22 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // Allow boxes to wrap to the next line
+    flexWrap: 'wrap',
     justifyContent: 'space-around',
     width: '100%',
     marginBottom: 16,
   },
-
   box: {
-    width: '45%', // Adjust the width as needed based on your design
+    width: '45%',
     marginBottom: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
     borderRadius: 8,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor:'#BDB5D5',
+  },
+  hoveredBox: {
+    backgroundColor: '#D3D3D3', 
   },
   boxImage: {
     width: "100%",
@@ -111,16 +118,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 8,
     color: "#953553",
-  },
-
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-
-  Description: {
-    fontSize: 16,
-    color: "#333",
   },
 });
 
