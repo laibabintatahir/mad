@@ -6,6 +6,8 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   ImageBackground,
+  TouchableOpacity,
+  Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -39,6 +41,7 @@ const FAQScreen = () => {
   ];
 
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const toggleAnswer = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -78,6 +81,26 @@ const FAQScreen = () => {
           </TouchableWithoutFeedback>
         ))}
       </ScrollView>
+
+      {/* Additional overlay content */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.overlay}>
+          <Text style={styles.overlayText}>Additional Content</Text>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setModalVisible(!modalVisible)}
+          >
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </ImageBackground>
   );
 };
@@ -87,13 +110,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
     padding: 16,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background to enhance readability
+    backgroundColor: "rgba(255,255,255, 0.7)", 
   },
   title: {
     fontSize: 30,
     fontWeight: "bold",
     marginBottom: 16,
-    color: "#fff", // White text color
+    marginTop: 2, 
+    color: "black",
   },
   faqItem: {
     marginBottom: 20,
@@ -115,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
-    color: "#770737", // color for the question
+    color: "#770737",
   },
   answer: {
     fontSize: 16,
@@ -125,6 +149,28 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    backgroundColor: "rgba(0, 0, 0, 0.9)", 
+    borderRadius: 10,
+  },
+  overlayText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 16,
+  },
+  closeButton: {
+    backgroundColor: "#953553",
+    padding: 12,
+    borderRadius: 8,
+  },
+  closeButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

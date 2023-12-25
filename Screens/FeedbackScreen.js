@@ -1,26 +1,37 @@
-// FeedbackScreen.js
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+//import firestore from '@react-native-firebase/firestore'; 
 
 const FeedbackScreen = () => {
+  const navigation = useNavigation();
   const [feedback, setFeedback] = useState('');
 
-  const handleSubmitFeedback = () => {
+  const handleSubmitFeedback = async () => {
     if (feedback.trim() === '') {
       Alert.alert('Error', 'Please enter your feedback before submitting.');
       return;
     }
 
-    // Implement logic to handle the submitted feedback
-    console.log('Submitted Feedback:', feedback);
+    try {
+      // Add feedback to Firebase Firestore
+      await firestore().collection('feedback').add({
+        feedback: feedback,
+        timestamp: firestore.FieldValue.serverTimestamp(),
+      });
 
-    Alert.alert('Success', 'Thank you for your feedback!');
-    // You can add more .......... sending feedback to a server
+      Alert.alert('Success', 'Thank you for your feedback!');
+      setFeedback(''); 
+      
+      navigation.navigate('HomeScreen');
+    } catch (error) {
+      console.error('Error adding feedback to Firestore:', error);
+      Alert.alert('Error', 'Failed to submit feedback. Please try again later.');
+    }
   };
 
   return (
     <View style={styles.container}>
-      
       <Image
         source={require('../assets/back.jpg')}
         style={styles.backgroundImage}
@@ -59,7 +70,7 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     padding: 16,
-    justifyContent: 'flex-start', // Align content at the top
+    justifyContent: 'flex-start',
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   title: {
