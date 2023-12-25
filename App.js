@@ -8,6 +8,9 @@ import FeedbackScreen from "./Screens/FeedbackScreen";
 import FAQScreen from "./Screens/FaqScreen";
 import HomeScreen from './Screens/HomeScreen';
 import UserProfileScreen from "./Screens/ProfileScreen";
+import SchedulePickupScreen from "./Screens/SchedulePickupScreen";
+import CheckoutScreen from "./Screens/CheckoutScreen";
+import SuccessScreen from "./Screens/SuccessScreen";
 
 const Stack = createStackNavigator();
 
@@ -21,12 +24,16 @@ function App() {
         <Stack.Screen name="FAQScreen" component={FAQScreen} />
         <Stack.Screen name="ServiceDetail" component={ServiceDetailScreen} />
         <Stack.Screen name="ProfileScreen" component={UserProfileScreen} />
+        <Stack.Screen name="SchedulePickupScreen" component={SchedulePickupScreen} />
+        <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+        <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 export default App;
+
 
 
 // function App() {

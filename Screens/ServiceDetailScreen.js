@@ -1,12 +1,10 @@
-// ServiceDetailScreen.js
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Assuming FontAwesome is used for star icons
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 
-const ServiceDetailScreen = ({ route }) => {
+const ServiceDetailScreen = ({ route, navigation }) => {
   const { service } = route.params;
 
-  // Placeholder data for additional details
   const additionalDetails = {
     price: '$10.00',
     deliveryTime: '2-3 working days',
@@ -18,18 +16,11 @@ const ServiceDetailScreen = ({ route }) => {
     ],
   };
 
-//   const handleScheduleService = () => {
-//     // Implement your logic to navigate to the scheduling screen
-//     // You can use navigation.navigate('ScheduleService') or similar
-//     console.log('Schedule service button pressed!');
-//   };
-
   const handleScheduleService = () => {
     // Implement your logic to navigate to the scheduling screen
-    // For example, if your scheduling screen is named 'ScheduleServiceScreen'
-    navigation.navigate('ScheduleServiceScreen', { service });
+    // For example, if your scheduling screen is named 'SchedulePickupScreen'
+    navigation.navigate('SchedulePickupScreen', { service });
   };
-  
 
   return (
     <View style={styles.container}>
